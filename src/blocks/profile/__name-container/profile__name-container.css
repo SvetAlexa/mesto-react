@@ -1,0 +1,18 @@
+.profile__name-container {
+    display: flex;
+    gap: 18px;
+    align-items: baseline;
+}
+
+@media screen and (max-width: 940px) {
+    .profile__name-container {
+        margin-left: 27px;
+        justify-content: center;
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .profile__name-container {
+        gap: 10px;
+    }
+}

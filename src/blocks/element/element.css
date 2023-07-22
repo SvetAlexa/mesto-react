@@ -1,0 +1,9 @@
+.element {
+    max-width: 282px;
+    width: 100%;
+    min-height: 361px;
+    list-style: none;
+    border-radius: 10px;
+    background-color: #fff;
+    position: relative;
+}

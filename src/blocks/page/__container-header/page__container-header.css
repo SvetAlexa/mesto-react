@@ -1,0 +1,18 @@
+.page__container-header {
+    padding-top: 45px;
+    padding-bottom: 41px;
+    box-sizing: border-box;
+}
+
+@media screen and (max-width: 940px) {
+    .page__container-header {
+        padding-left: 27px;
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .page__container-header {
+        padding-top: 28px;
+        padding-bottom: 31.6px;
+    }
+}

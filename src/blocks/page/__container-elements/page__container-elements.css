@@ -1,0 +1,28 @@
+.page__container-elements {
+   padding-top: 50px;
+   padding-bottom: 66px;
+   box-sizing: border-box;
+}
+
+@media screen and (max-width: 940px) {
+   .page__container-elements {
+      padding-left: 27px;
+      padding-right: 27px;
+   }
+}
+
+@media screen and (max-width: 640px) {
+   .page__container-elements {
+      padding-left: 22px;
+      padding-right: 22px;
+      padding-top: 36px;
+      padding-bottom: 48px;
+   }
+}
+
+@media screen and (max-width: 400px) {
+   .page__container-elements {
+      padding-left: 0;
+      padding-right: 0;
+   }
+}

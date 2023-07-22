@@ -1,0 +1,24 @@
+.profile__activity {
+  margin: 0;
+  font-family: 'Inter', 'Arial', sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1.22;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+@media screen and (max-width: 940px) {
+  .profile__activity {
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .profile__activity {
+    font-size: 14px;
+    line-height: 1.21;
+  }
+}
