@@ -1,16 +1,16 @@
 import { useEffect } from "react"
 
-function ImagePopup(props) {
+function ImagePopup({ card, onClose }) {
 
     useEffect(() => {
         const handleEscClick = (evt) => {
             const key = evt.key;
             if (key === 'Escape') {
-                props.onClose()
+                onClose()
             }
         }
 
-        if (props.card) {
+        if (card) {
             document.addEventListener('keydown', handleEscClick)
         }
 
@@ -22,18 +22,18 @@ function ImagePopup(props) {
 
     function handleOverlayClick(evt) {
         if (evt.target === evt.currentTarget) {
-            props.onClose()
+            onClose()
         }
     }
 
     return (
         <>
-            <div className={`popup popup_type_image ${props.card ? 'popup_is-opened' : ''}`} onClick={handleOverlayClick}>
+            <div className={`popup popup_type_image ${card ? 'popup_is-opened' : ''}`} onClick={handleOverlayClick}>
                 <div className="popup__container-image">
-                    <button type="button" className="popup__close-button" onClick={props.onClose}></button>
+                    <button type="button" className="popup__close-button" onClick={onClose}></button>
                     <figure className="popup__figure">
-                        <img className="popup__image" src={props.card?.src} alt={props.card?.title} />
-                        <figcaption className="popup__caption">{props.card?.title}</figcaption>
+                        <img className="popup__image" src={card?.src} alt={card?.title} />
+                        <figcaption className="popup__caption">{card?.title}</figcaption>
                     </figure>
                 </div>
             </div>
