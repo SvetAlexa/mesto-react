@@ -44,7 +44,6 @@ export default function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardCl
     }, [])
 
     return (
-        <>
             <main className="main">
                 <section className="profile page__container-profile">
                     <div className="profile__container-avatar" onClick={onEditAvatar}>
@@ -75,6 +74,5 @@ export default function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardCl
                     </ul>
                 </section>
             </main>
-        </>
     )
 }

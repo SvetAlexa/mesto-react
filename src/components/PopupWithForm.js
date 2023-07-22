@@ -27,7 +27,6 @@ export default function PopupWithForm({ name, title, buttonText, isOpen, onClose
     }
 
     return (
-        <>
             <div className={`popup popup_type_${name} ${isOpen ? 'popup_is-opened' : ''}`}
                 onClick={handleOverlayClick}>
                 <div className="popup__container">
@@ -40,6 +39,5 @@ export default function PopupWithForm({ name, title, buttonText, isOpen, onClose
                         className="popup__button-sumbit popup__button-sumbit_create">{buttonText}</button>
                 </div>
             </div>
-        </>
     )
 }

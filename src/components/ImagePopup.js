@@ -27,7 +27,6 @@ function ImagePopup({ card, onClose }) {
     }
 
     return (
-        <>
             <div className={`popup popup_type_image ${card ? 'popup_is-opened' : ''}`} onClick={handleOverlayClick}>
                 <div className="popup__container-image">
                     <button type="button" className="popup__close-button" onClick={onClose}></button>
@@ -37,7 +36,6 @@ function ImagePopup({ card, onClose }) {
                     </figure>
                 </div>
             </div>
-        </>
     )
 }
 

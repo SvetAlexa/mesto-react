@@ -5,7 +5,6 @@ export default function Card({ card, onCardClick }) {
     }
 
     return (
-        <>
             <li className="element">
                 <button type="button" className="element__delete"></button>
                 <img className="element__image" src={card.src} alt={card.title} onClick={handleClick} />
@@ -17,6 +16,5 @@ export default function Card({ card, onCardClick }) {
                     </div>
                 </div>
             </li>
-        </>
     )
 }
