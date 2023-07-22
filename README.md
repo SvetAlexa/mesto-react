@@ -16,4 +16,4 @@
 
 ## Контакты
 
-Посмотреть проект можно [по ссылке](https://svetalexa.github.io/mesto/ "https://svetalexa.github.io/mesto/")
+Посмотреть проект можно [по ссылке](https://svetalexa.github.io/mesto-react/ "https://svetalexa.github.io/mesto-react/")
