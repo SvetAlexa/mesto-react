@@ -33,7 +33,7 @@ export default function PopupWithForm({ name, title, buttonText, isOpen, onClose
                     <button type="button" className="popup__close-button" onClick={onClose}></button>
                     <h2 className="popup__title">{title}</h2>
                     <form name={`${name}-form`} className="popup__form" noValidate>
-                        {(children)}
+                        {children}
                     </form>
                     <button type="submit" name="submit" value="submit"
                         className="popup__button-sumbit popup__button-sumbit_create">{buttonText}</button>
