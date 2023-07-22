@@ -7,13 +7,13 @@
 Посмотреть первый вариант проекта на чистом JavaScript можно [по ссылке](https://github.com/SvetAlexa/mesto "https://github.com/SvetAlexa/mesto")
 
 
-## Обзор  
+## Технологии
 
 * Проект создан через ***CRA (Create React Component)***
 * HTML разметка портирована в JSX
 * Использованы функциональные компоненты
 * Использованы хуки состояния и для создания «побочных эффектов»
 
-## Контакты
+## Посмотреть проект
 
-Посмотреть проект можно [по ссылке](https://svetalexa.github.io/mesto-react/ "https://svetalexa.github.io/mesto-react/")
+[Нажмите на ссылку](https://svetalexa.github.io/mesto-react/ "https://svetalexa.github.io/mesto-react/")
