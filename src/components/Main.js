@@ -2,18 +2,6 @@ import { useState, useEffect } from "react";
 import api from '../utils/api';
 import Card from "./Card";
 
-const mapCards = (cards) => {
-    return cards.map((item) => {
-        return {
-            cardId: item._id,
-            src: item.link,
-            alt: item.name,
-            title: item.name
-        };
-    });
-};
-
-
 export default function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
 
     const [userName, setUserName] = useState('');
@@ -36,7 +24,7 @@ export default function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardCl
     useEffect(() => {
         api.getInitialCards()
             .then((cardsArray) => {
-                setCards(mapCards(cardsArray));
+                setCards(cardsArray);
             })
             .catch((err) => {
                 console.error(`Произошла ошибка: ${err}`)
@@ -65,7 +53,7 @@ export default function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardCl
                     <ul className="elements__lists">
                         {cards.map((item) => (
                             <Card
-                                key={item.cardId}
+                                key={item._id}
                                 card={item}
                                 onCardClick={onCardClick}
                             />
