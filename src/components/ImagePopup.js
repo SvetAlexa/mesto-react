@@ -27,15 +27,15 @@ function ImagePopup({ card, onClose }) {
     }
 
     return (
-            <div className={`popup popup_type_image ${card ? 'popup_is-opened' : ''}`} onClick={handleOverlayClick}>
-                <div className="popup__container-image">
-                    <button type="button" className="popup__close-button" onClick={onClose}></button>
-                    <figure className="popup__figure">
-                        <img className="popup__image" src={card?.link} alt={card?.name} />
-                        <figcaption className="popup__caption">{card?.name}</figcaption>
-                    </figure>
-                </div>
+        <div className={`popup popup_type_image ${card ? 'popup_is-opened' : ''}`} onClick={handleOverlayClick}>
+            <div className="popup__container-image">
+                <button type="button" className="popup__close-button" onClick={onClose}></button>
+                <figure className="popup__figure">
+                    <img className="popup__image" src={card?.link} alt={card?.name} />
+                    <figcaption className="popup__caption">{card?.name}</figcaption>
+                </figure>
             </div>
+        </div>
     )
 }
 
