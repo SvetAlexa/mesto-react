@@ -11,6 +11,7 @@ function App({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, onClose }) 
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+  const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
 
   const [selectedCard, setSelectedCard] = useState(null);
 
@@ -27,6 +28,7 @@ function App({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, onClose }) 
   }
 
   function handleCardClick(card) {
+    setIsImagePopupOpen(true);
     setSelectedCard(card);
   }
 
@@ -34,7 +36,7 @@ function App({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, onClose }) 
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
-    setSelectedCard(null);
+    setIsImagePopupOpen(false);
   }
 
   return (
@@ -97,6 +99,7 @@ function App({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, onClose }) 
       </PopupWithForm>
       <ImagePopup
         card={selectedCard}
+        isOpen={isImagePopupOpen}
         onClose={closeAllPopups}
       />
     </>
