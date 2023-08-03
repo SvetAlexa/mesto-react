@@ -8,7 +8,7 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import api from "../utils/api"
 
 
-function App({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, onClose, onCardLike }) {
+function App({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, onClose, onCardLike, onCardDelete }) {
 
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
@@ -23,11 +23,11 @@ function App({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, onClose, on
 
   useEffect(() => {
     api.getAllInfo()
-    .then(([userData, cardsArray]) => {
-      console.log(userData);
-      setCurrentUser(userData);
-      setCards(cardsArray);
-    })
+      .then(([userData, cardsArray]) => {
+        console.log(userData);
+        setCurrentUser(userData);
+        setCards(cardsArray);
+      })
       .catch((err) => {
         console.error(`Произошла ошибка: ${err}`)
       })
@@ -59,14 +59,32 @@ function App({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, onClose, on
 
   function handleCardLike(card) {
     const isLiked = card.likes.some(i => i._id === currentUser._id) // определяем, есть ли у карточки лайк, поставленный текущим пользователем
-    api.swapLike(card._id, isLiked)
+    api.swapLike(card._id, isLiked) // отправляем запрос в API и получаем обновленные данные карточки
       .then((newCard) => {
-        setCards((state) => 
-          state.map((c) => 
-          c._id === card._id ? newCard : c)
+        setCards((state) =>
+          state.map((item) =>
+            item._id === card._id ? newCard : item)
         )
       })
+      .catch((err) => {
+        console.error(`Произошла ошибка: ${err}`)
+      })
   }
+
+  function handleCardDelete(card) {
+    api.removeCard(card._id)
+      .then(() => {
+        setCards((state) => {
+          return state.filter((item) =>
+            item._id !== card._id
+          )
+        })
+      })
+      // .catch((err) => {
+      //   console.error(`Произошла ошибка: ${err}`)
+      // })
+  }
+
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -78,6 +96,7 @@ function App({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, onClose, on
           onEditAvatar={handleEditAvatarClick}
           onCardClick={handleCardClick}
           onCardLike={handleCardLike}
+          onCardDelete={handleCardDelete}
           cards={cards}
         />
         <Footer />
