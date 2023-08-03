@@ -3,6 +3,7 @@ import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
 import PopupWithForm from "./PopupWithForm";
+import EditProfilePopup from "./EditProfilePopup";
 import ImagePopup from "./ImagePopup";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import api from "../utils/api"
@@ -14,6 +15,7 @@ function App({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, onClose, on
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
+  // const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
 
   const [selectedCard, setSelectedCard] = useState(null);
 
@@ -50,6 +52,10 @@ function App({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, onClose, on
     setSelectedCard(card);
   }
 
+  // function handleButtonDeleteClick() {
+  //   setIsDeletePopupOpen(true);
+  // }
+
   function closeAllPopups() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
@@ -80,9 +86,9 @@ function App({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, onClose, on
           )
         })
       })
-      // .catch((err) => {
-      //   console.error(`Произошла ошибка: ${err}`)
-      // })
+      .catch((err) => {
+        console.error(`Произошла ошибка: ${err}`)
+      })
   }
 
 
@@ -115,20 +121,7 @@ function App({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, onClose, on
           </li>
         </ul>
       </PopupWithForm>
-      <PopupWithForm name="edit" title="Редактировать профиль" buttonText="Сохранить" isOpen={isEditProfilePopupOpen} onClose={closeAllPopups}>
-        <ul className="popup__input-list">
-          <li className="popup__input-item">
-            <input type="text" name="user" placeholder="Ваше имя" minLength="2" maxLength="40" required
-              className="popup__input popup__input_value_name" />
-            <span className="error" id="user-error"></span>
-          </li>
-          <li>
-            <input type="text" name="about" placeholder="Ваше занятие" minLength="2" maxLength="200"
-              required className="popup__input popup__input_value_activity" />
-            <span className="error" id="about-error"></span>
-          </li>
-        </ul>
-      </PopupWithForm>
+      <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} />
       <PopupWithForm name="edit-avatar" title="Обновить аватар" buttonText="Сохранить" isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups}>
         <ul className="popup__input-list">
           <li className="popup__input-item">
@@ -138,7 +131,7 @@ function App({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, onClose, on
           </li>
         </ul>
       </PopupWithForm>
-      <PopupWithForm name="delete" title="Вы уверены?" buttonText="Да">
+      <PopupWithForm name="delete" title="Вы уверены?" buttonText="Да" onClose={closeAllPopups}>
         <ul className="popup__input-list">
           <li className="popup__input-item">
             <input type="url" name="avatar" placeholder="Ссылка на аватар" required
