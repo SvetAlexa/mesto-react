@@ -9,7 +9,7 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import api from "../utils/api"
 
 
-function App({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, onClose, onCardLike, onCardDelete }) {
+function App() {
 
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
@@ -91,6 +91,16 @@ function App({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, onClose, on
       })
   }
 
+  function handleUpdateUser(userInfo) {
+    api.editUserInfo(userInfo)
+    .then((userInfoUpdated) => {
+      setCurrentUser(userInfoUpdated);
+      closeAllPopups()
+    })
+    .catch((err) => {
+      console.error(`Произошла ошибка: ${err}`)
+    })
+  }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -121,7 +131,7 @@ function App({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, onClose, on
           </li>
         </ul>
       </PopupWithForm>
-      <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} />
+      <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
       <PopupWithForm name="edit-avatar" title="Обновить аватар" buttonText="Сохранить" isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups}>
         <ul className="popup__input-list">
           <li className="popup__input-item">
