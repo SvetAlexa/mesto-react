@@ -1,14 +1,14 @@
-import { useState, useEffect } from "react"
-import Header from './Header'
-import Main from './Main'
-import Footer from './Footer'
-import PopupWithForm from "./PopupWithForm"
-import ImagePopup from "./ImagePopup"
-import { CurrentUserContext } from "../contexts/CurrentUserContext"
+import { useState, useEffect } from "react";
+import Header from './Header';
+import Main from './Main';
+import Footer from './Footer';
+import PopupWithForm from "./PopupWithForm";
+import ImagePopup from "./ImagePopup";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import api from "../utils/api"
 
 
-function App({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, onClose }) {
+function App({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, onClose, onCardLike }) {
 
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
@@ -19,12 +19,15 @@ function App({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, onClose }) 
 
   const [currentUser, setCurrentUser] = useState('');
 
+  const [cards, setCards] = useState([]);
+
   useEffect(() => {
-    api.getUserInfo()
-      .then((userData) => {
-        console.log(userData)
-        setCurrentUser(userData);
-      })
+    api.getAllInfo()
+    .then(([userData, cardsArray]) => {
+      console.log(userData);
+      setCurrentUser(userData);
+      setCards(cardsArray);
+    })
       .catch((err) => {
         console.error(`Произошла ошибка: ${err}`)
       })
@@ -54,6 +57,17 @@ function App({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, onClose }) 
     setIsImagePopupOpen(false);
   }
 
+  function handleCardLike(card) {
+    const isLiked = card.likes.some(i => i._id === currentUser._id) // определяем, есть ли у карточки лайк, поставленный текущим пользователем
+    api.swapLike(card._id, isLiked)
+      .then((newCard) => {
+        setCards((state) => 
+          state.map((c) => 
+          c._id === card._id ? newCard : c)
+        )
+      })
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
@@ -63,6 +77,8 @@ function App({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, onClose }) 
           onAddPlace={handleAddPlaceClick}
           onEditAvatar={handleEditAvatarClick}
           onCardClick={handleCardClick}
+          onCardLike={handleCardLike}
+          cards={cards}
         />
         <Footer />
       </div>

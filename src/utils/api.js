@@ -34,9 +34,9 @@ class Api {
         })
     }
 
-    // getAllInfo() {
-    //     return Promise.all([this.getUserInfo(), this.getInitialCards()])
-    // }
+    getAllInfo() {
+        return Promise.all([this.getUserInfo(), this.getInitialCards()])
+    }
 
     createNewCard(dataCard) {
         return this._request(`/cards`, {

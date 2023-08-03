@@ -1,23 +1,10 @@
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
-import { useState, useEffect, useContext } from "react";
-import api from '../utils/api';
-import Card from "./Card";
+import { useContext } from "react";
+import Card from "./Card"
 
-export default function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
-
-    const [cards, setCards] = useState([]);
+export default function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, onCardLike, cards }) {
 
     const currentUser = useContext(CurrentUserContext);
-
-    useEffect(() => {
-        api.getInitialCards()
-            .then((cardsArray) => {
-                setCards(cardsArray);
-            })
-            .catch((err) => {
-                console.error(`Произошла ошибка: ${err}`)
-            })
-    }, [])
 
     return (
         <main className="main">
@@ -44,6 +31,7 @@ export default function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardCl
                             key={item._id}
                             card={item}
                             onCardClick={onCardClick}
+                            onCardLike={onCardLike}
                         />
                     ))
                     }
