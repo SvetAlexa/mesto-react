@@ -17,7 +17,7 @@ export default function Card({ card, onCardClick, onCardLike, onCardDeleteButton
         onCardLike(card)
     }
 
-    function handleBigImageClick() {
+    function handleCardClick() {
         onCardClick(card)
     }
 
@@ -28,7 +28,7 @@ export default function Card({ card, onCardClick, onCardLike, onCardDeleteButton
     return (
         <li className="element">
             <div className="element__image-container">
-                <img className="element__image" src={card.link} alt={card.name} onClick={handleBigImageClick} />
+                <img className="element__image" src={card.link} alt={card.name} onClick={handleCardClick} />
             </div>
             {isOwn && <button type="button" className="element__delete" onClick={handleButtonDeleteClick} /> }
             <div className="element__title-container">
