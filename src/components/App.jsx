@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
-import PopupWithForm from "./PopupWithForm";
+import AddPlacePopup from "./AddPlacePopup";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import DeleteCardPopup from "./DeleteCardPopup";
@@ -29,6 +29,7 @@ function App() {
     api.getAllInfo()
       .then(([userData, cardsArray]) => {
         console.log(userData);
+        console.log(cardsArray);
         setCurrentUser(userData);
         setCards(cardsArray);
       })
@@ -118,6 +119,18 @@ function App() {
     })
   }
 
+  function handleAddPlaceSubmit(cardData) {
+    api.createNewCard(cardData)
+    .then((newCard) => {
+      console.log(newCard);
+      setCards([newCard, ...cards]);
+      closeAllPopups()
+    })
+    // .catch((err) => {
+    //   console.error(`Произошла ошибка: ${err}`)
+    // })
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
@@ -133,20 +146,7 @@ function App() {
         />
         <Footer />
       </div>
-      <PopupWithForm name="new-card" title="Новое место" buttonText="Создать" isOpen={isAddPlacePopupOpen} onClose={closeAllPopups}>
-        <ul className="popup__input-list">
-          <li className="popup__input-item">
-            <input type="text" name="name" placeholder="Название" minLength="2" maxLength="30" required
-              className="popup__input popup__input_value_title" />
-            <span className="error" id="name-error"></span>
-          </li>
-          <li>
-            <input type="url" name="link" placeholder="Ссылка на картинку" required
-              className="popup__input popup__input_value_link" />
-            <span className="error" id="link-error"></span>
-          </li>
-        </ul>
-      </PopupWithForm>
+      <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit}/>
       <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
       <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
       <DeleteCardPopup isOpen={isDeletePopupOpen.isOpen} card={isDeletePopupOpen.card} onClose={closeAllPopups} onCardDelete={handleCardDelete} />

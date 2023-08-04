@@ -6,8 +6,6 @@ export default function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
 
     const inputAvatarRef = useRef();
 
-    
-
     function handleSubmit(evt) {
         evt.preventDefault();
         onUpdateAvatar({
