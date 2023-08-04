@@ -40,30 +40,42 @@ function App() {
 
   function handleEditProfileClick() {
     setIsEditProfilePopupOpen(true);
+    document.addEventListener('keydown', handleEscClick)
   }
 
   function handleAddPlaceClick() {
     setIsAddPlacePopupOpen(true);
+    document.addEventListener('keydown', handleEscClick)
   }
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);
+    document.addEventListener('keydown', handleEscClick)
   }
 
   function handleCardClick(card) {
     setIsImagePopupOpen(true);
     setSelectedCard(card);
+    document.addEventListener('keydown', handleEscClick)
   }
 
   function handleDeleteClick(card) {
     setIsDeletePopupOpen({ isOpen: true, card: card });
+    document.addEventListener('keydown', handleEscClick)
   }
 
   function handleOverlayClick(evt) {
     if (evt.target === evt.currentTarget) {
       closeAllPopups()
     }
-}
+  }
+
+  function handleEscClick(evt) {
+    const key = evt.key;
+    if (key === 'Escape') {
+      closeAllPopups()
+    }
+  }
 
   function closeAllPopups() {
     setIsEditProfilePopupOpen(false);
@@ -71,6 +83,7 @@ function App() {
     setIsEditAvatarPopupOpen(false);
     setIsImagePopupOpen(false);
     setIsDeletePopupOpen({ isOpen: false, cards: {} })
+    document.removeEventListener('keydown', handleEscClick)
   }
 
   function handleCardLike(card) {

@@ -1,26 +1,4 @@
-import { useEffect } from "react"
-
 export default function PopupWithForm({ name, title, buttonText, isOpen, onClose, children, onSubmit, onOverlay }) {
-
-    useEffect(() => {
-        const handleEscClick = (evt) => {
-            const key = evt.key;
-            if (key === 'Escape') {
-                onClose()
-            }
-        }
-
-        if (isOpen) {
-            document.addEventListener('keydown', handleEscClick)
-        }
-
-        return () => {
-            document.removeEventListener('keydown', handleEscClick)
-        }
-    })
-
-
-   
 
     return (
         <div className={`popup popup_type_${name} ${isOpen ? 'popup_is-opened' : ''}`}
