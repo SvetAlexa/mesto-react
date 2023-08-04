@@ -4,6 +4,8 @@ import Main from './Main';
 import Footer from './Footer';
 import PopupWithForm from "./PopupWithForm";
 import EditProfilePopup from "./EditProfilePopup";
+import EditAvatarPopup from "./EditAvatarPopup";
+import DeleteCardPopup from "./DeleteCardPopup";
 import ImagePopup from "./ImagePopup";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import api from "../utils/api"
@@ -15,7 +17,7 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
-  // const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
+  const [isDeletePopupOpen, setIsDeletePopupOpen] = useState({ isOpen: false, cards: {} });
 
   const [selectedCard, setSelectedCard] = useState(null);
 
@@ -52,15 +54,16 @@ function App() {
     setSelectedCard(card);
   }
 
-  // function handleButtonDeleteClick() {
-  //   setIsDeletePopupOpen(true);
-  // }
+  function handleDeleteClick(card) {
+    setIsDeletePopupOpen({ isOpen: true, card: card });
+  }
 
   function closeAllPopups() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
     setIsImagePopupOpen(false);
+    setIsDeletePopupOpen({ isOpen: false, cards: {} })
   }
 
   function handleCardLike(card) {
@@ -85,6 +88,7 @@ function App() {
             item._id !== card._id
           )
         })
+        closeAllPopups()
       })
       .catch((err) => {
         console.error(`Произошла ошибка: ${err}`)
@@ -93,6 +97,18 @@ function App() {
 
   function handleUpdateUser(userInfo) {
     api.editUserInfo(userInfo)
+    .then((userInfoUpdated) => {
+      setCurrentUser(userInfoUpdated);
+      closeAllPopups()
+    })
+    .catch((err) => {
+      console.error(`Произошла ошибка: ${err}`)
+    })
+  }
+
+  
+  function handleUpdateAvatar(avatar) {
+    api.editAvatarPhoto(avatar)
     .then((userInfoUpdated) => {
       setCurrentUser(userInfoUpdated);
       closeAllPopups()
@@ -112,7 +128,7 @@ function App() {
           onEditAvatar={handleEditAvatarClick}
           onCardClick={handleCardClick}
           onCardLike={handleCardLike}
-          onCardDelete={handleCardDelete}
+          onCardDeleteButton={handleDeleteClick}
           cards={cards}
         />
         <Footer />
@@ -132,24 +148,8 @@ function App() {
         </ul>
       </PopupWithForm>
       <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
-      <PopupWithForm name="edit-avatar" title="Обновить аватар" buttonText="Сохранить" isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups}>
-        <ul className="popup__input-list">
-          <li className="popup__input-item">
-            <input type="url" name="avatar" placeholder="Ссылка на аватар" required
-              className="popup__input popup__input_value_avatar" />
-            <span className="error" id="avatar-error"></span>
-          </li>
-        </ul>
-      </PopupWithForm>
-      <PopupWithForm name="delete" title="Вы уверены?" buttonText="Да" onClose={closeAllPopups}>
-        <ul className="popup__input-list">
-          <li className="popup__input-item">
-            <input type="url" name="avatar" placeholder="Ссылка на аватар" required
-              className="popup__input popup__input_value_avatar" />
-            <span className="error" id="avatar-error"></span>
-          </li>
-        </ul>
-      </PopupWithForm>
+      <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
+      <DeleteCardPopup isOpen={isDeletePopupOpen.isOpen} card={isDeletePopupOpen.card} onClose={closeAllPopups} onCardDelete={handleCardDelete} />
       <ImagePopup
         card={selectedCard}
         isOpen={isImagePopupOpen}
