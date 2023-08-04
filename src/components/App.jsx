@@ -25,6 +25,8 @@ function App() {
 
   const [cards, setCards] = useState([]);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
     api.getAllInfo()
       .then(([userData, cardsArray]) => {
@@ -101,6 +103,7 @@ function App() {
   }
 
   function handleCardDelete(card) {
+    setIsLoading(true)
     api.removeCard(card._id)
       .then(() => {
         setCards((state) => {
@@ -113,9 +116,13 @@ function App() {
       .catch((err) => {
         console.error(`Произошла ошибка: ${err}`)
       })
+      .finally(() => {
+        setIsLoading(false)
+      })
   }
 
   function handleUpdateUser(userInfo) {
+    setIsLoading(true)
     api.setUserInfo(userInfo)
       .then((userInfoUpdated) => {
         setCurrentUser(userInfoUpdated);
@@ -124,10 +131,14 @@ function App() {
       .catch((err) => {
         console.error(`Произошла ошибка: ${err}`)
       })
+      .finally(() => {
+        setIsLoading(false)
+      })
   }
 
 
   function handleUpdateAvatar(avatar) {
+    setIsLoading(true)
     api.setAvatarPhoto(avatar)
       .then((userInfoUpdated) => {
         setCurrentUser(userInfoUpdated);
@@ -136,9 +147,13 @@ function App() {
       .catch((err) => {
         console.error(`Произошла ошибка: ${err}`)
       })
+      .finally(() => {
+        setIsLoading(false)
+      })
   }
 
   function handleAddPlaceSubmit(cardData) {
+    setIsLoading(true)
     api.createNewCard(cardData)
       .then((newCard) => {
         setCards([newCard, ...cards]);
@@ -146,6 +161,9 @@ function App() {
       })
       .catch((err) => {
         console.error(`Произошла ошибка: ${err}`)
+      })
+      .finally(() => {
+        setIsLoading(false)
       })
   }
 
@@ -166,21 +184,25 @@ function App() {
       </div>
       <AddPlacePopup
         isOpen={isAddPlacePopupOpen}
+        isLoading={isLoading}
         onClose={closeAllPopups}
         onAddPlace={handleAddPlaceSubmit}
         onOverlay={handleOverlayClick} />
       <EditProfilePopup
         isOpen={isEditProfilePopupOpen}
+        isLoading={isLoading}
         onClose={closeAllPopups}
         onUpdateUser={handleUpdateUser}
         onOverlay={handleOverlayClick} />
       <EditAvatarPopup
         isOpen={isEditAvatarPopupOpen}
+        isLoading={isLoading}
         onClose={closeAllPopups}
         onUpdateAvatar={handleUpdateAvatar}
         onOverlay={handleOverlayClick} />
       <DeleteCardPopup
         isOpen={isDeletePopupOpen.isOpen}
+        isLoading={isLoading}
         card={isDeletePopupOpen.card}
         onClose={closeAllPopups}
         onCardDelete={handleCardDelete}

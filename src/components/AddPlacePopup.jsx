@@ -1,7 +1,7 @@
 import { useState } from "react";
 import PopupWithForm from "./PopupWithForm";
 
-export default function AddPlacePopup({ isOpen, onClose, onAddPlace, onOverlay }) {
+export default function AddPlacePopup({ isOpen, isLoading, onClose, onAddPlace, onOverlay }) {
     const [title, setTitle] = useState('');
     const [link, setLink] = useState('');
 
@@ -24,7 +24,7 @@ export default function AddPlacePopup({ isOpen, onClose, onAddPlace, onOverlay }
     }
 
     return (
-        <PopupWithForm name="new-card" title="Новое место" buttonText="Создать"
+        <PopupWithForm name="new-card" title="Новое место" buttonText={`${!isLoading ? "Создать" : "Сохранение..."}`}
             isOpen={isOpen}
             onClose={onClose}
             onOverlay={onOverlay}
