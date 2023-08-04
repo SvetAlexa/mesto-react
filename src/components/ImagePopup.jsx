@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 
-function ImagePopup({ card, isOpen, onClose }) {
+function ImagePopup({ card, isOpen, onClose, onOverlay }) {
 
     useEffect(() => {
         const handleEscClick = (evt) => {
@@ -10,7 +10,7 @@ function ImagePopup({ card, isOpen, onClose }) {
             }
         }
 
-        if (card) {
+        if (isOpen) {
             document.addEventListener('keydown', handleEscClick)
         }
 
@@ -19,15 +19,8 @@ function ImagePopup({ card, isOpen, onClose }) {
         }
     })
 
-
-    function handleOverlayClick(evt) {
-        if (evt.target === evt.currentTarget) {
-            onClose()
-        }
-    }
-
     return (
-        <div className={`popup popup_type_image ${isOpen ? 'popup_is-opened' : ''}`} onClick={handleOverlayClick}>
+        <div className={`popup popup_type_image ${isOpen ? 'popup_is-opened' : ''}`} onClick={onOverlay}>
             <div className="popup__container-image">
                 <button type="button" className="popup__close-button" onClick={onClose}></button>
                 <figure className="popup__figure">

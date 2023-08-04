@@ -60,7 +60,7 @@ class Api {
         })
     }
 
-    editUserInfo(data) {
+    setUserInfo(data) {
         return this._request(`/users/me`, {
             method: 'PATCH',
             headers: this._headers,
@@ -68,7 +68,7 @@ class Api {
         })
     }
 
-    editAvatarPhoto(data) {
+    setAvatarPhoto(data) {
         return this._request(`/users/me/avatar`, {
             method: 'PATCH',
             headers: this._headers,

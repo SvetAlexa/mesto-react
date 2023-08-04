@@ -2,7 +2,7 @@ import { useRef } from "react";
 import PopupWithForm from "./PopupWithForm";
 
 
-export default function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
+export default function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, onOverlay }) {
 
     const inputAvatarRef = useRef();
 
@@ -14,7 +14,10 @@ export default function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
     }
 
     return (
-        <PopupWithForm name="edit-avatar" title="Обновить аватар" buttonText="Сохранить" isOpen={isOpen} onClose={onClose}
+        <PopupWithForm name="edit-avatar" title="Обновить аватар" buttonText="Сохранить"
+            isOpen={isOpen}
+            onClose={onClose}
+            onOverlay={onOverlay}
             onSubmit={handleSubmit}>
             <ul className="popup__input-list">
                 <li className="popup__input-item">

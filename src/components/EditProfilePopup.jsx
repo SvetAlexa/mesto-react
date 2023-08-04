@@ -2,7 +2,7 @@ import { useState, useContext, useEffect } from "react";
 import PopupWithForm from "./PopupWithForm";
 import { CurrentUserContext } from '../contexts/CurrentUserContext'
 
-export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
+export default function EditProfilePopup({ isOpen, onClose, onUpdateUser, onOverlay }) {
     const currentUser = useContext(CurrentUserContext);
 
     const [name, setName] = useState('');
@@ -27,7 +27,11 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
     }, [currentUser])
 
     return (
-        <PopupWithForm name="edit" title="Редактировать профиль" buttonText="Сохранить" isOpen={isOpen} onClose={onClose} onSubmit={handleSubmit}>
+        <PopupWithForm name="edit" title="Редактировать профиль" buttonText="Сохранить"
+            isOpen={isOpen}
+            onClose={onClose}
+            onOverlay={onOverlay}
+            onSubmit={handleSubmit}>
             <ul className="popup__input-list">
                 <li className="popup__input-item">
                     <input type="text" name="user" placeholder="Ваше имя" minLength="2" maxLength="40" required

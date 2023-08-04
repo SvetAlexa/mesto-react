@@ -59,6 +59,12 @@ function App() {
     setIsDeletePopupOpen({ isOpen: true, card: card });
   }
 
+  function handleOverlayClick(evt) {
+    if (evt.target === evt.currentTarget) {
+      closeAllPopups()
+    }
+}
+
   function closeAllPopups() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
@@ -97,38 +103,37 @@ function App() {
   }
 
   function handleUpdateUser(userInfo) {
-    api.editUserInfo(userInfo)
-    .then((userInfoUpdated) => {
-      setCurrentUser(userInfoUpdated);
-      closeAllPopups()
-    })
-    .catch((err) => {
-      console.error(`Произошла ошибка: ${err}`)
-    })
+    api.setUserInfo(userInfo)
+      .then((userInfoUpdated) => {
+        setCurrentUser(userInfoUpdated);
+        closeAllPopups()
+      })
+      .catch((err) => {
+        console.error(`Произошла ошибка: ${err}`)
+      })
   }
 
-  
+
   function handleUpdateAvatar(avatar) {
-    api.editAvatarPhoto(avatar)
-    .then((userInfoUpdated) => {
-      setCurrentUser(userInfoUpdated);
-      closeAllPopups()
-    })
-    .catch((err) => {
-      console.error(`Произошла ошибка: ${err}`)
-    })
+    api.setAvatarPhoto(avatar)
+      .then((userInfoUpdated) => {
+        setCurrentUser(userInfoUpdated);
+        closeAllPopups()
+      })
+      .catch((err) => {
+        console.error(`Произошла ошибка: ${err}`)
+      })
   }
 
   function handleAddPlaceSubmit(cardData) {
     api.createNewCard(cardData)
-    .then((newCard) => {
-      console.log(newCard);
-      setCards([newCard, ...cards]);
-      closeAllPopups()
-    })
-    // .catch((err) => {
-    //   console.error(`Произошла ошибка: ${err}`)
-    // })
+      .then((newCard) => {
+        setCards([newCard, ...cards]);
+        closeAllPopups()
+      })
+      .catch((err) => {
+        console.error(`Произошла ошибка: ${err}`)
+      })
   }
 
   return (
@@ -146,14 +151,32 @@ function App() {
         />
         <Footer />
       </div>
-      <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit}/>
-      <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
-      <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
-      <DeleteCardPopup isOpen={isDeletePopupOpen.isOpen} card={isDeletePopupOpen.card} onClose={closeAllPopups} onCardDelete={handleCardDelete} />
+      <AddPlacePopup
+        isOpen={isAddPlacePopupOpen}
+        onClose={closeAllPopups}
+        onAddPlace={handleAddPlaceSubmit}
+        onOverlay={handleOverlayClick} />
+      <EditProfilePopup
+        isOpen={isEditProfilePopupOpen}
+        onClose={closeAllPopups}
+        onUpdateUser={handleUpdateUser}
+        onOverlay={handleOverlayClick} />
+      <EditAvatarPopup
+        isOpen={isEditAvatarPopupOpen}
+        onClose={closeAllPopups}
+        onUpdateAvatar={handleUpdateAvatar}
+        onOverlay={handleOverlayClick} />
+      <DeleteCardPopup
+        isOpen={isDeletePopupOpen.isOpen}
+        card={isDeletePopupOpen.card}
+        onClose={closeAllPopups}
+        onCardDelete={handleCardDelete}
+        onOverlay={handleOverlayClick} />
       <ImagePopup
         card={selectedCard}
         isOpen={isImagePopupOpen}
         onClose={closeAllPopups}
+        onOverlay={handleOverlayClick}
       />
     </CurrentUserContext.Provider>
   );
