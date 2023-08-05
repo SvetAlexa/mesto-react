@@ -10,7 +10,6 @@ import ImagePopup from "./ImagePopup";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import api from "../utils/api"
 
-
 function App() {
 
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -30,8 +29,6 @@ function App() {
   useEffect(() => {
     api.getAllInfo()
       .then(([userData, cardsArray]) => {
-        console.log(userData);
-        console.log(cardsArray);
         setCurrentUser(userData);
         setCards(cardsArray);
       })

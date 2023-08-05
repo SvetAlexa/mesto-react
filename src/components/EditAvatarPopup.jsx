@@ -1,8 +1,10 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import PopupWithForm from "./PopupWithForm";
-
+import useFormValidator from "./useFormValidator"
 
 export default function EditAvatarPopup({ isOpen, isLoading, onClose, onUpdateAvatar, onOverlay }) {
+    
+    const { values, errors, setErrors, handleInputsChange, setValues, isValid, setIsValid } = useFormValidator()
 
     const inputAvatarRef = useRef();
 
@@ -13,17 +15,24 @@ export default function EditAvatarPopup({ isOpen, isLoading, onClose, onUpdateAv
         })
     }
 
+    useEffect(() => {
+        setErrors('')
+        setValues('')
+        setIsValid(false)
+    }, [isOpen])
+
     return (
         <PopupWithForm name="edit-avatar" title="Обновить аватар" buttonText={`${!isLoading ? "Сохранить" : "Сохранение..."}`}
             isOpen={isOpen}
+            isValid={!isValid}
             onClose={onClose}
             onOverlay={onOverlay}
             onSubmit={handleSubmit}>
             <ul className="popup__input-list">
                 <li className="popup__input-item">
                     <input type="url" name="avatar" placeholder="Ссылка на аватар" required
-                        className="popup__input popup__input_value_avatar" ref={inputAvatarRef} />
-                    <span className="error" id="avatar-error"></span>
+                        className="popup__input popup__input_value_avatar" ref={inputAvatarRef} value={values.avatar ?? ''} onChange={handleInputsChange} />
+                    <span className="error" id="avatar-error">{errors.avatar}</span>
                 </li>
             </ul>
         </PopupWithForm>
