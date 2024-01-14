@@ -19,7 +19,7 @@
 * установить зависимости ```npm install```
 * запустить сервер ```npm run start```
 * запустить сборку ```npm run build```
-* опубликовать сбоку на github pages ```npm run deploy```
+* опубликовать сборку на github pages ```npm run deploy```
 
 ## Посмотреть проект
 
