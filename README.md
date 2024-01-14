@@ -15,6 +15,12 @@
 * Использованы хуки состояния и для создания «побочных эффектов»
 * Работа с API, fetch запросы
 
+## Запуск проекта
+* установить зависимости ```npm install```
+* запустить сервер ```npm run start```
+* запустить сборку ```npm run build```
+* опубликовать сбоку на github pages ```npm run deploy```
+
 ## Посмотреть проект
 
 [Нажмите на ссылку](https://svetalexa.github.io/mesto-react/ "https://svetalexa.github.io/mesto-react/")
